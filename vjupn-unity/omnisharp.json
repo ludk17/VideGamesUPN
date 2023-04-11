@@ -1,0 +1,9 @@
+{
+    "MsBuild": {
+        "UseLegacySdkResolver": true
+    },
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "omnisharp.path": "latest",
+    "omnisharp.useGlobalMono": "always"
+}
