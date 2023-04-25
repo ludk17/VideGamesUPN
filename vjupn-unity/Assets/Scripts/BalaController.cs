@@ -5,6 +5,7 @@ using UnityEngine;
 public class BalaController : MonoBehaviour
 {
     public float velocityX = 0.1f;
+    public float velocityY = 0f;
     Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
@@ -16,7 +17,7 @@ public class BalaController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = new Vector2(velocityX, rb.velocity.y);
+        rb.velocity = new Vector2(velocityX, velocityY);
     }
 
     void OnTriggerEnter2D(Collider2D other) {
