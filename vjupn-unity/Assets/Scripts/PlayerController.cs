@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject gameManager;
     public GameObject bala;
+
     private Rigidbody2D rb;
 
     private Transform balaTransform;
+    
 
     private bool balaExiste = false;
     void Start()
@@ -31,6 +35,7 @@ public class PlayerController : MonoBehaviour
         
         GameObject balaGenerada = Instantiate(bala, newPosition, Quaternion.identity);
         balaTransform = balaGenerada.transform;
+        GanarPuntos();
       }
     }
 
@@ -51,5 +56,13 @@ public class PlayerController : MonoBehaviour
 
         (balaGenerada3.GetComponent<BalaController>()).velocityY = -1;
       }
+    }
+
+    private void GanarPuntos() {
+      var gm = gameManager.GetComponent<GameManager>();
+      var uim = gameManager.GetComponent<UiManager>();
+
+      gm.GanarPuntos();
+      uim.PrintPuntaje(gm.GetPuntaje());
     }
 }
