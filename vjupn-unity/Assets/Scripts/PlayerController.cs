@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public AudioClip[] audios;
     public GameObject gameManager;
     public GameObject bala;
 
+    
     private Rigidbody2D rb;
-
+    private AudioSource audioSource;
     private Transform balaTransform;
     
 
@@ -17,12 +19,20 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        Saltar();
         Disparar();
         DividirDisparo();
+    }
+
+    private void Saltar() {
+      if(Input.GetKeyUp(KeyCode.Space)) {
+        audioSource.PlayOneShot(audios[0]);
+      }
     }
 
     private void Disparar() {
