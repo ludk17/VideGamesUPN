@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using UnityEngine.SceneManagement;
+
+
 public class PlayerController : MonoBehaviour
 {
     public AudioClip[] audios;
@@ -20,19 +23,50 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+
+        SceneManager.LoadScene("Scene2");
+
     }
 
     void Update()
     {
+
+        //rb.velocity = new Vector2(0, rb.velocity.y);
+
+        if(Input.GetKey(KeyCode.RightArrow)) {
+          rb.velocity = new Vector2(10, rb.velocity.y);
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftArrow)) {
+          MoverIzquierda();
+        }
+
+        if(Input.GetKeyUp(KeyCode.LeftArrow)) {
+          Detenerse();
+        }
+
+
+
         Saltar();
         Disparar();
         DividirDisparo();
     }
 
+    public void MoverIzquierda() {
+      rb.velocity = new Vector2(-10, rb.velocity.y);
+    }
+    public void Detenerse() {
+      rb.velocity = new Vector2(0, rb.velocity.y);
+    }
+
     private void Saltar() {
       if(Input.GetKeyUp(KeyCode.Space)) {
-        audioSource.PlayOneShot(audios[0]);
+        ReproducirSonidoSalto();
       }
+    }
+
+    public void ReproducirSonidoSalto() {
+      audioSource.PlayOneShot(audios[0]);
     }
 
     private void Disparar() {
@@ -69,10 +103,10 @@ public class PlayerController : MonoBehaviour
     }
 
     private void GanarPuntos() {
-      var gm = gameManager.GetComponent<GameManager>();
-      var uim = gameManager.GetComponent<UiManager>();
+      // var gm = gameManager.GetComponent<GameManager>();
+      // var uim = gameManager.GetComponent<UiManager>();
 
-      gm.GanarPuntos();
-      uim.PrintPuntaje(gm.GetPuntaje());
+      // gm.GanarPuntos();
+      // uim.PrintPuntaje(gm.GetPuntaje());
     }
 }

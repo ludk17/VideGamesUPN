@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BalaController : MonoBehaviour
 {
+    private GameObject gameManager;
     public float velocityX = 0.1f;
     public float velocityY = 0f;
     Rigidbody2D rb;
@@ -11,6 +12,13 @@ public class BalaController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        gameManager = GameObject.Find("GameManager");
+
+        var gm = gameManager.GetComponent<GameManager>();
+        var uim = gameManager.GetComponent<UiManager>();
+        gm.GanarPuntos();
+        uim.PrintPuntaje(gm.GetPuntaje());
+
         Destroy(this.gameObject, 5);
     }
 
