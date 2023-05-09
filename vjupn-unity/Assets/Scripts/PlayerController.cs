@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
 
     void OnTriggerEnter2D(Collider2D other) {
-      if(other.gameObject.tag.equals("BALA_TAG")) {
+      if(other.gameObject.tag == "BALA_TAG") {
         // gmController.AddSkill("DISPARAR");
       }  
     }

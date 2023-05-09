@@ -12,6 +12,6 @@ public class GameData
     {
         Score = 0;
         Vidas = 3;
-        Skills = List<string>();
+        Skills = new List<string>();
     }
 }

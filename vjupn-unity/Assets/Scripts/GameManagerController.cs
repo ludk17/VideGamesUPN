@@ -34,7 +34,7 @@ public class GameManagerController : MonoBehaviour
         LoadScreenTexts();
     }
 
-    public List<String> GetSkills() {
+    public List<string> GetSkills() {
         return gameData.Skills;
     }
 }
