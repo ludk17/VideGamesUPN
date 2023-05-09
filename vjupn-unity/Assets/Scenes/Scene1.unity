@@ -133,9 +133,10 @@ GameObject:
   m_Component:
   - component: {fileID: 288447951}
   - component: {fileID: 288447950}
+  - component: {fileID: 288447952}
   m_Layer: 0
   m_Name: idle_0
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -199,12 +200,38 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288447949}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.22, y: -14.06, z: 0}
+  m_LocalPosition: {x: -18.89, y: -13.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &288447952
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288447949}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.45, y: 1.49}
+    newSize: {x: 1.45, y: 1.49}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.45, y: 1.49}
+  m_EdgeRadius: 0
 --- !u!1 &331077534
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,29 +440,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 373799211}
-  - component: {fileID: 373799210}
-  - component: {fileID: 373799209}
   - component: {fileID: 373799212}
+  - component: {fileID: 373799210}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameManagerObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &373799209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 373799208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 776f54fbee41c46d990d962d270baf89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PuntajeText: {fileID: 1357876584}
 --- !u!114 &373799210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,7 +458,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 373799208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bce0979b9d4543e4a9ebcc6d52af6c8, type: 3}
+  m_Script: {fileID: 11500000, guid: f7b78dd79855f49998713aef5c5f7d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &373799211
@@ -2508,7 +2521,7 @@ GameObject:
   - component: {fileID: 1357876585}
   - component: {fileID: 1357876584}
   m_Layer: 5
-  m_Name: PuntajeText
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3223,11 +3236,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3557212719446781275, guid: 150473fea2e6647968564ca31fd8acf9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.3
+      value: -25.4
       objectReference: {fileID: 0}
     - target: {fileID: 3557212719446781275, guid: 150473fea2e6647968564ca31fd8acf9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.68
+      value: -13.75
       objectReference: {fileID: 0}
     - target: {fileID: 3557212719446781275, guid: 150473fea2e6647968564ca31fd8acf9, type: 3}
       propertyPath: m_LocalPosition.z

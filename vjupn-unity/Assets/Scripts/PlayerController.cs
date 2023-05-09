@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     public GameObject bala;
 
     
+    private GameManagerController gmController;
+    private List<string> skills;
+
     private Rigidbody2D rb;
     private AudioSource audioSource;
     private Transform balaTransform;
@@ -23,9 +26,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
-
-        SceneManager.LoadScene("Scene2");
-
+        gmController = GameObject.Find("GameManagerObject").GetComponent<GameManagerController>();
     }
 
     void Update()
@@ -70,8 +71,9 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Disparar() {
+      skills = gmController.GetSkills();
 
-      if(Input.GetKeyUp(KeyCode.X)) {
+      if(Input.GetKeyUp(KeyCode.X) && skills.Contains("DISPARAR")) {
         balaExiste = true;
         var position = transform.position;
         var x = position.x + 1;
@@ -103,10 +105,13 @@ public class PlayerController : MonoBehaviour
     }
 
     private void GanarPuntos() {
-      // var gm = gameManager.GetComponent<GameManager>();
-      // var uim = gameManager.GetComponent<UiManager>();
+      gmController.GanarPunto();
+    }
 
-      // gm.GanarPuntos();
-      // uim.PrintPuntaje(gm.GetPuntaje());
+
+    void OnTriggerEnter2D(Collider2D other) {
+      if(other.gameObject.tag.equals("BALA_TAG")) {
+        // gmController.AddSkill("DISPARAR");
+      }  
     }
 }

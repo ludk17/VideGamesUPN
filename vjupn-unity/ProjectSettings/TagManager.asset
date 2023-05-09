@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Barril
+  - Enemy
   layers:
   - Default
   - TransparentFX
