@@ -8,8 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
+    private List<Integer> numbers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,19 +21,36 @@ public class MainActivity extends AppCompatActivity {
         this.setContentView(R.layout.activity_main);
 
         TextView tvMessage = findViewById(R.id.tvMessage);
-        Button btn = findViewById(R.id.btnChangeText);
-        EditText editText = findViewById(R.id.editText);
+        TextView tvSum = findViewById(R.id.tvSum);
 
-        BtnClick b = new BtnClick();
+        Button btn1 = findViewById(R.id.btnNumber1);
+        Button btn2 = findViewById(R.id.btnNumber2);
+        Button btn3 = findViewById(R.id.btnNumber3);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text = editText.getText().toString();
-                tvMessage.setText(text);
-            }
+        Button btnCalc = findViewById(R.id.btnCalc);
+
+        btn1.setOnClickListener(view -> {
+            String text = tvMessage.getText().toString();
+            numbers.add(1);
+            tvMessage.setText(text + " + " + "1");
         });
 
+        btn2.setOnClickListener(view -> {
+            String text = tvMessage.getText().toString();
+            numbers.add(2);
+            tvMessage.setText(text + " + " + "2");
+        });
+
+        btn3.setOnClickListener(view -> {
+            String text = tvMessage.getText().toString();
+            numbers.add(3);
+            tvMessage.setText(text + " + " + "3");
+        });
+
+        btnCalc.setOnClickListener(view -> {
+            int sum = numbers.stream().reduce(0, Integer::sum);
+            tvSum.setText(String.valueOf(sum));
+        });
 
     }
 }
