@@ -13,6 +13,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView tvMessage;
     private List<Integer> numbers = new ArrayList<>();
 
     @Override
@@ -20,31 +21,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
 
-        TextView tvMessage = findViewById(R.id.tvMessage);
-        TextView tvSum = findViewById(R.id.tvSum);
+        tvMessage = this.findViewById(R.id.tvMessage);
+        TextView tvSum = this.findViewById(R.id.tvSum);
 
-        Button btn1 = findViewById(R.id.btnNumber1);
-        Button btn2 = findViewById(R.id.btnNumber2);
-        Button btn3 = findViewById(R.id.btnNumber3);
+        Button btn1 = this.findViewById(R.id.btnNumber1);
+        Button btn2 = this.findViewById(R.id.btnNumber2);
 
-        Button btnCalc = findViewById(R.id.btnCalc);
+        Button btn3 = this.findViewById(R.id.btnNumber3);
+
+        Button btnCalc = this.findViewById(R.id.btnCalc);
 
         btn1.setOnClickListener(view -> {
-            String text = tvMessage.getText().toString();
-            numbers.add(1);
-            tvMessage.setText(text + " + " + "1");
+            addNumber(1);
         });
 
         btn2.setOnClickListener(view -> {
-            String text = tvMessage.getText().toString();
-            numbers.add(2);
-            tvMessage.setText(text + " + " + "2");
+            addNumber(2);
         });
 
         btn3.setOnClickListener(view -> {
-            String text = tvMessage.getText().toString();
-            numbers.add(3);
-            tvMessage.setText(text + " + " + "3");
+            addNumber(3);
         });
 
         btnCalc.setOnClickListener(view -> {
@@ -52,5 +48,11 @@ public class MainActivity extends AppCompatActivity {
             tvSum.setText(String.valueOf(sum));
         });
 
+    }
+
+    private void addNumber(int number) {
+        String text = tvMessage.getText().toString();
+        numbers.add(number);
+        tvMessage.setText(text + " + " + number);
     }
 }
