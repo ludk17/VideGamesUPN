@@ -3,12 +3,14 @@ package com.example.vj20231.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.vj20231.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -37,7 +39,11 @@ public class NameAdapter extends RecyclerView.Adapter {
         View view = holder.itemView;
 
         TextView tvName = view.findViewById(R.id.tvName);
+        ImageView imageView = view.findViewById(R.id.imageView);
         tvName.setText(item);
+
+        Picasso.get().load("https://i.imgur.com/DvpvklR.png").into(imageView);
+
     }
 
     @Override
