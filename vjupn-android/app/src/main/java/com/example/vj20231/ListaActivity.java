@@ -36,12 +36,6 @@ public class ListaActivity extends AppCompatActivity {
 
         UserService service = retrofit.create(UserService.class);
         Call<List<User>> call = service.getAllUser();
-        Call<User> call1 = service.findUser(1);
-
-
-        User u = new User();
-        u.name = "Otro Gato";
-        Call<Void> call2 = service.create(u);
 
 
         call.enqueue(new Callback<List<User>>() {
