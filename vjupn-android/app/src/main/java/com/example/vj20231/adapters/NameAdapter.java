@@ -10,15 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.vj20231.R;
+import com.example.vj20231.entities.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class NameAdapter extends RecyclerView.Adapter {
 
-    private List<String> items;
+    private List<User> items;
 
-    public NameAdapter(List<String> items) {
+    public NameAdapter(List<User> items) {
         this.items = items;
     }
 
@@ -35,12 +36,12 @@ public class NameAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        String item = items.get(position);
+        User item = items.get(position);
         View view = holder.itemView;
 
         TextView tvName = view.findViewById(R.id.tvName);
         ImageView imageView = view.findViewById(R.id.imageView);
-        tvName.setText(item);
+        tvName.setText(item.name);
 
         Picasso.get().load("https://i.imgur.com/DvpvklR.png").into(imageView);
 
