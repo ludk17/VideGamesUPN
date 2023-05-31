@@ -18,17 +18,17 @@ public interface UserService {
     @GET("users")
     Call<List<User>> getAllUser();
 
-    // /users/1
     @GET("users/{id}")
     Call<User> findUser(@Path("id") int id);
 
-    // users
     @POST("users")
-    Call<Void> create(@Body User user);
+    Call<User> create(@Body User user);
 
     @PUT("users/{id}")
-    Call<Void> update(@Path("id") int id, @Body User user);
+    Call<User> update(@Path("id") int id, @Body User user);
 
     @DELETE("users/{id}")
     Call<Void> delete(@Path("id") int id);
 }
+
+

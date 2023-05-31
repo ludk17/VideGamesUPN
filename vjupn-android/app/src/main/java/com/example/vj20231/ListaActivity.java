@@ -5,10 +5,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.vj20231.adapters.NameAdapter;
 import com.example.vj20231.entities.User;
 import com.example.vj20231.services.UserService;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,26 +32,35 @@ public class ListaActivity extends AppCompatActivity {
         rvLista.setLayoutManager(new LinearLayoutManager(this));
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .baseUrl("https://647742fc9233e82dd53b49b7.mockapi.io/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+
         UserService service = retrofit.create(UserService.class);
-        Call<List<User>> call = service.getAllUser();
+        User user = new User();
+        user.name = "Lionel";
+        user.username = "lionel.messi";
+        user.email = "lionel.messicom";
+
+        Call<Void> call = service.delete(3);
 
 
-        call.enqueue(new Callback<List<User>>() {
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                if(response.isSuccessful()) {
-                    List<User> users = response.body();
-                    NameAdapter adapter = new NameAdapter(users);
-                    rvLista.setAdapter(adapter);
-                }
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.i("MAIN_APP", String.valueOf(response.code()));
+//                if(response.isSuccessful()) {
+//                    User data = response.body();
+//                    Log.i("MAIN_APP", new Gson().toJson(data));
+//                    NameAdapter adapter = new NameAdapter(data);
+//                    rvLista.setAdapter(adapter);
+//                }
+               // llegó una respuesta
             }
 
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
 
             }
         });
