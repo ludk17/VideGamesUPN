@@ -39,7 +39,7 @@ public class ListaActivity extends AppCompatActivity {
 
         UserService service = retrofit.create(UserService.class);
         User user = new User();
-        user.name = "Lionel";
+        user.name = "ﬁLionel";
         user.username = "lionel.messi";
         user.email = "lionel.messicom";
 
