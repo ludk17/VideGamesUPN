@@ -1,5 +1,7 @@
 package com.example.vj20231.Clases;
 
+
+
 public class Anime {
     String nombre;
     String descripcion;
