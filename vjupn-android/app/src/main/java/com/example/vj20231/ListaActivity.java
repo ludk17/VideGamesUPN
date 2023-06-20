@@ -3,12 +3,15 @@ package com.example.vj20231;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.vj20231.adapters.NameAdapter;
+import com.example.vj20231.db.AppDatabase;
 import com.example.vj20231.entities.User;
+import com.example.vj20231.repositories.UserRepository;
 import com.example.vj20231.services.UserService;
 import com.google.gson.Gson;
 
@@ -31,43 +34,24 @@ public class ListaActivity extends AppCompatActivity {
         RecyclerView rvLista =  findViewById(R.id.rvListaSimple);
         rvLista.setLayoutManager(new LinearLayoutManager(this));
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://647742fc9233e82dd53b49b7.mockapi.io/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
+        AppDatabase db = AppDatabase.getInstance(this);
 
-        UserService service = retrofit.create(UserService.class);
-        User user = new User();
-        user.name = "ﬁLionel";
-        user.username = "lionel.messi";
-        user.email = "lionel.messicom";
+        UserRepository repository = db.userRepository();
 
-        Call<Void> call = service.delete(3);
+        List<User> users = repository.getAllUser();
 
-
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.i("MAIN_APP", String.valueOf(response.code()));
-//                if(response.isSuccessful()) {
-//                    User data = response.body();
-//                    Log.i("MAIN_APP", new Gson().toJson(data));
-//                    NameAdapter adapter = new NameAdapter(data);
-//                    rvLista.setAdapter(adapter);
-//                }
-               // llegó una respuesta
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-
-            }
-        });
+//        User user = new User();
+//        user.id = 1;
+//        user.name = "Luigi";
+//        user.username = "luigi";
+//        user.email = "luigi.mendoza@gmail.com";
+//
+//        repository.create(user);
 
 
 
-
+        Log.i("MAIN_APP", new Gson().toJson(users));
 
     }
 
