@@ -17,6 +17,7 @@
         <entry key="app/src/main/res/layout/item_anime.xml" value="0.23072916666666668" />
         <entry key="app/src/main/res/layout/item_comment.xml" value="0.225" />
         <entry key="app/src/main/res/layout/item_post.xml" value="0.225" />
+        <entry key="app/src/main/res/layout/item_progressbar.xml" value="0.2028985507246377" />
         <entry key="app/src/main/res/layout/item_string.xml" value="0.33645833333333336" />
       </map>
     </option>

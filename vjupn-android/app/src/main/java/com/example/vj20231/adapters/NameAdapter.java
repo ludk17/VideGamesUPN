@@ -27,9 +27,15 @@ public class NameAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
+        NameViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.item_string, parent, false);
-        NameViewHolder viewHolder = new NameViewHolder(view);
+        if(viewType == 1) {
+            View view = inflater.inflate(R.layout.item_string, parent, false);
+            viewHolder = new NameViewHolder(view);
+        } else {
+            View view = inflater.inflate(R.layout.item_progressbar, parent, false);
+            viewHolder = new NameViewHolder(view);
+        }
 
         return viewHolder;
     }
@@ -53,6 +59,12 @@ public class NameAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        User item = items.get(position);
+        return item == null ? 0 : 1;
     }
 
     public class NameViewHolder extends RecyclerView.ViewHolder {

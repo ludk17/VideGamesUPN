@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Attributes;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +35,8 @@ public class ListaActivity extends AppCompatActivity {
     RecyclerView mRvLista;
     boolean mIsLoading = false;
     int mPage = 1;
+    List<User> mdata = new ArrayList<>();
+    NameAdapter mAdapter = new NameAdapter(mdata);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,30 @@ public class ListaActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRvLista =  findViewById(R.id.rvListaSimple);
         mRvLista.setLayoutManager(layoutManager);
+        mRvLista.setAdapter(mAdapter);
+
+        mRvLista.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                if (!mIsLoading) {
+
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == mdata.size() - 1) {
+                        mPage++;
+                        loadMore(mPage);
+                    }
+                }
+
+            }
+        });
 
 
 
@@ -56,7 +83,7 @@ public class ListaActivity extends AppCompatActivity {
         }
         else {
 //            uploadToWebService();
-            loadFromWebService();
+            loadMore(mPage);
         }
 
     }
@@ -70,66 +97,24 @@ public class ListaActivity extends AppCompatActivity {
         // retrofit
     }
 
-    private void loadFromWebService() {
-        UserService service = mRetrofit.create(UserService.class);
+
+    private void loadMore(int nextPage) {
         mIsLoading = true;
-        service.getAllUser(mPage).enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                if(!response.isSuccessful()) return;
-                Log.i("MAIN_APP: WebService", new Gson().toJson(response.body()));
 
-                List<User> data = response.body();
-                NameAdapter adapter = new NameAdapter(response.body());
-                mRvLista.setAdapter(adapter);
-
-                mIsLoading = false;
-
-
-
-                mRvLista.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                        super.onScrollStateChanged(recyclerView, newState);
-                    }
-
-                    @Override
-                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                        super.onScrolled(recyclerView, dx, dy);
-
-                        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                        if (!mIsLoading) {
-
-                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == data.size() - 1) {
-                                mPage++;
-                                loadMore(data, adapter, mPage);
-                            }
-                        }
-
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-
-            }
-        });
-
-        Log.i("MAIN_APP", "1");
-    }
-
-    private void loadMore(List<User> data, NameAdapter adapter, int nextPage) {
-        mIsLoading = true;
+        mdata.add(null);
+        mAdapter.notifyItemInserted(mdata.size() - 1);
 
         UserService service = mRetrofit.create(UserService.class);
         Log.i("MAIN_APP  Page:", String.valueOf(nextPage));
-        service.getAllUser(nextPage).enqueue(new Callback<List<User>>() {
+        service.getAllUser(6, nextPage).enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                data.addAll(response.body());
-                adapter.notifyDataSetChanged();
+
+                mdata.remove(mdata.size() -1);
+                mAdapter.notifyItemRemoved(mdata.size() -1);
+
+                mdata.addAll(response.body());
+                mAdapter.notifyDataSetChanged();
                 mIsLoading = false;
             }
 
