@@ -16,7 +16,7 @@ import retrofit2.http.Query;
 public interface UserService {
 
     @GET("users")
-    Call<List<User>> getAllUser();
+    Call<List<User>> getAllUser(@Query("page") int page);
 
     @GET("users/{id}")
     Call<User> findUser(@Path("id") int id);

@@ -37,6 +37,9 @@ public class NameAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         User item = items.get(position);
+
+        if(item == null) return;
+
         View view = holder.itemView;
 
         TextView tvName = view.findViewById(R.id.tvName);
