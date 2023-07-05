@@ -2,10 +2,12 @@ package com.example.vj20231;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.jar.Attributes;
 
 import retrofit2.Call;
@@ -33,8 +36,10 @@ public class ListaActivity extends AppCompatActivity {
 
     Retrofit mRetrofit;
     RecyclerView mRvLista;
+    SearchView mSvFilter;
     boolean mIsLoading = false;
     int mPage = 1;
+    String currentFilter = "";
     List<User> mdata = new ArrayList<>();
     NameAdapter mAdapter = new NameAdapter(mdata);
 
@@ -44,6 +49,42 @@ public class ListaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista);
 
         mRetrofit = RetrofitBuilder.build();
+        mSvFilter = findViewById(R.id.svFilter);
+        currentFilter = mSvFilter.getQuery().toString();
+
+        mSvFilter.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("MAIN_APP query", query);
+                mdata.clear();
+                mAdapter.notifyDataSetChanged();
+                currentFilter = query;
+                loadMore(currentFilter, 1);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(Objects.equals(newText, "")) {
+                    mdata.clear();
+                    mAdapter.notifyDataSetChanged();
+                    currentFilter = "";
+                    loadMore(currentFilter, 1);
+                }
+                return true;
+            }
+
+
+        });
+
+
+
+
+
+
+
+
+        Log.i("MAIN_APP CurrentFilter", currentFilter);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRvLista =  findViewById(R.id.rvListaSimple);
@@ -66,7 +107,7 @@ public class ListaActivity extends AppCompatActivity {
 
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == mdata.size() - 1) {
                         mPage++;
-                        loadMore(mPage);
+                        loadMore(currentFilter, mPage);
                     }
                 }
 
@@ -83,7 +124,7 @@ public class ListaActivity extends AppCompatActivity {
         }
         else {
 //            uploadToWebService();
-            loadMore(mPage);
+            loadMore(currentFilter, mPage);
         }
 
     }
@@ -98,7 +139,7 @@ public class ListaActivity extends AppCompatActivity {
     }
 
 
-    private void loadMore(int nextPage) {
+    private void loadMore(String filter, int nextPage) {
         mIsLoading = true;
 
         mdata.add(null);
@@ -106,12 +147,14 @@ public class ListaActivity extends AppCompatActivity {
 
         UserService service = mRetrofit.create(UserService.class);
         Log.i("MAIN_APP  Page:", String.valueOf(nextPage));
-        service.getAllUser(6, nextPage).enqueue(new Callback<List<User>>() {
+        service.getAllUser(filter, 6, nextPage).enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
 
-                mdata.remove(mdata.size() -1);
-                mAdapter.notifyItemRemoved(mdata.size() -1);
+                if(mdata.size() > 0) {
+                    mdata.remove(mdata.size() - 1);
+                    mAdapter.notifyItemRemoved(mdata.size() - 1);
+                }
 
                 mdata.addAll(response.body());
                 mAdapter.notifyDataSetChanged();
